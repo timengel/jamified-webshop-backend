@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 const path = require("path");
+const generator = require("../../utils/dummy-data-generator");
+
 
 const {
   categories,
@@ -64,7 +66,40 @@ const createSeedData = async (files) => {
 
   const handleFiles = (data) => {
 
-    var file = files.find(x => x.includes(data.slug));
+    const slugs = [
+      'angular',
+      'c-plus-plus',
+      'docker',
+      'gatsby',
+      'golang',
+      'google-cloud',
+      'graph-ql',
+      'java',
+      'kotlin',
+      'kubernetes',
+      'laravel',
+      'linux',
+      'mongo-db',
+      'next-js',
+      'npm',
+      'nuxt-js',
+      'php',
+      'postgre-sql',
+      'python',
+      'react',
+      'ruby-1',
+      'ruby-on-rails',
+      'rust',
+      'sq-lite',
+      'strapi',
+      'swift',
+      'vue-js'
+    ];
+
+    const randomNum = generator.generateRandomInteger(1, 28);
+
+    let imageSlug = slugs[randomNum-1];
+    let file = files.find(x => x.includes(imageSlug));
     file = `./data/uploads/${file}`;
 
     const size = getFilesizeInBytes(file);
@@ -73,7 +108,7 @@ const createSeedData = async (files) => {
     const mimeType = `image/.${ext}`;
     const image = {
       path: file,
-      name: `${data.slug}.${ext}`,
+      name: `${imageSlug}.${ext}`,
       size,
       type: mimeType
     };

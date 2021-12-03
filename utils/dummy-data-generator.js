@@ -3,12 +3,7 @@
 const fs = require('fs');
 const LoremIpsum = require('lorem-ipsum').LoremIpsum;
 
-
-
-// lorem.generateWords(1);
-// lorem.generateSentences(5);
-// lorem.generateParagraphs(7);
-
+//################## Internal Utils ##################\\
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
     max: 3,
@@ -20,50 +15,25 @@ const lorem = new LoremIpsum({
   }
 });
 
-
 const generateRandomNumber = (min, max, precision) => {
   // Including min number, excluding max number!
   return Math.floor(Math.random() * (max * precision - min * precision) + min * precision) / (min * precision)
 }
 
-const generateRandomInteger =  (min, max) => parseInt(generateRandomNumber(min, max, 10))
-
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const getRandomCategories = () => {
-  const categories = [
-    {
-      name: "Back",
-      slug: "back",
-    },
-    {
-      name: "Front",
-      slug: "front",
-    },
-    {
-      name: "SSG",
-      slug: "ssg",
-    },
-    {
-      name: "Container",
-      slug: "container",
-    },
-    {
-      name: "Database",
-      slug: "database",
-    },
-    {
-      name: "Other",
-      slug: "other",
-    },
-  ];
   // How many categories to add
   const numberOfCategories = generateRandomInteger(1, 3); // 1, 3 => 2 categories
   // Generate unique category indexes
   const indexes = [];
   // console.log('#########################');
   // console.log('numberOfCategories: ' + numberOfCategories);
+  const categories = getCategories();
   while(indexes.length < numberOfCategories){
-    let category = generateRandomInteger(1, 6);
+    let category = generateRandomInteger(1, categories.length);
     // console.log('category: ' + category);
     if(indexes.indexOf(category) === -1) indexes.push(category);
   }
@@ -99,21 +69,60 @@ const generateProduct = ({id, title, description, price, slug, categories}) => {
   }
 };
 
-let products = [];
-for (let i = 28; i < 50; i++) {
-  const title = lorem.generateWords(1);
-  const slug = title + '-' + i.toString();
+//################## Exported Utils ##################\\
+const generateRandomInteger =  (min, max) => parseInt(generateRandomNumber(min, max, 10))
 
-  products.push(generateProduct({
-      id: i,
-      title: lorem.generateWords(1),
-      description: lorem.generateSentences(1),
-      price: generateRandomNumber(1, 1000, 100), // precision 100 => 2 decimal places
-      slug: slug,
-      categories: getRandomCategories(),
-    }
-  ))
+const getCategories = () => {
+  return [
+    {
+      name: "Back",
+      slug: "back",
+    },
+    {
+      name: "Front",
+      slug: "front",
+    },
+    {
+      name: "SSG",
+      slug: "ssg",
+    },
+    {
+      name: "Container",
+      slug: "container",
+    },
+    {
+      name: "Database",
+      slug: "database",
+    },
+    {
+      name: "Other",
+      slug: "other",
+    },
+  ];
 }
 
-let data = JSON.stringify(products);
-fs.writeFileSync('dummy-products.json', data);
+const getProducts = () => {
+  let products = [];
+  for (let i = 1; i < 100; i++) {
+    const name = lorem.generateWords(1);
+    const title = capitalizeFirstLetter(name);
+    const slug = name + '-' + i.toString();
+
+    products.push(generateProduct({
+        id: i,
+        title: title,
+        description: lorem.generateSentences(1),
+        price: generateRandomNumber(1, 1000, 100), // precision 100 => 2 decimal places
+        slug: slug,
+        categories: getRandomCategories(),
+      }
+    ))
+  }
+  return products;
+}
+
+module.exports = {
+  generateRandomInteger: generateRandomInteger,
+  getProducts: getProducts,
+  getCategories: getCategories,
+}
