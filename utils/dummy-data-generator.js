@@ -96,7 +96,8 @@ const getCategories = () => {
 
 const getProducts = () => {
   let products = [];
-  for (let i = 1; i < 2500; i++) {
+  const n = 1000;
+  for (let i = 1; i < n; i++) {
     const name = lorem.generateWords(1);
     const title = capitalizeFirstLetter(name);
     const slug = name + '-' + i.toString();
@@ -114,8 +115,16 @@ const getProducts = () => {
   return products;
 }
 
+const getTimestamp = () => {
+  const t = new Date();
+  return t.getFullYear() + '-' + (t.getMonth() + 1) + '-'
+    + t.getDate() + '_' + t.getHours() + ':' + t.getMinutes() + ':'
+    + t.getSeconds();
+}
+
 module.exports = {
   generateRandomInteger: generateRandomInteger,
   getProducts: getProducts,
   getCategories: getCategories,
+  getTimestamp: getTimestamp,
 }
