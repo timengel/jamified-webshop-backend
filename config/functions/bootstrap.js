@@ -41,19 +41,21 @@ const setDefaultPermissions = async () => {
 };
 
 const isFirstRun = async () => {
-  const pluginStore = strapi.store({
-    environment: strapi.config.environment,
-    type: "type",
-    name: "setup"
-  });
-  const initHasRun = await pluginStore.get({
-    key: "initHasRun"
-  });
-  await pluginStore.set({
-    key: "initHasRun",
-    value: true
-  });
-  return !initHasRun;
+  // Always run init
+  return true;
+  // const pluginStore = strapi.store({
+  //   environment: strapi.config.environment,
+  //   type: "type",
+  //   name: "setup"
+  // });
+  // const initHasRun = await pluginStore.get({
+  //   key: "initHasRun"
+  // });
+  // await pluginStore.set({
+  //   key: "initHasRun",
+  //   value: true
+  // });
+  // return !initHasRun;
 };
 
 const getFilesizeInBytes = filepath => {
