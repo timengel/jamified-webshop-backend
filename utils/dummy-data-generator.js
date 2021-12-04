@@ -1,9 +1,8 @@
 'use strict';
 
-const fs = require('fs');
 const LoremIpsum = require('lorem-ipsum').LoremIpsum;
 
-//################## Internal Utils ##################\\
+//################## Helpers ##################\\
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
     max: 3,
@@ -25,16 +24,13 @@ const capitalizeFirstLetter = (string) => {
 }
 
 const getRandomCategories = () => {
-  // How many categories to add
+  // How many categories to assign to product
   const numberOfCategories = generateRandomInteger(1, 3); // 1, 3 => 2 categories
   // Generate unique category indexes
   const indexes = [];
-  // console.log('#########################');
-  // console.log('numberOfCategories: ' + numberOfCategories);
   const categories = getCategories();
   while(indexes.length < numberOfCategories){
     let category = generateRandomInteger(1, categories.length);
-    // console.log('category: ' + category);
     if(indexes.indexOf(category) === -1) indexes.push(category);
   }
   // Return category objects by index
@@ -42,9 +38,6 @@ const getRandomCategories = () => {
   indexes.map(i => {
       result.push(categories[i]);
   });
-  // console.log('indexes: ' + indexes);
-  // console.log('result: ');
-  // result.map(r => console.log(r.name));
   return result;
 }
 
