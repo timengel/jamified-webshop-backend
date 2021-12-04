@@ -96,7 +96,7 @@ const getCategories = () => {
 
 const getProducts = () => {
   let products = [];
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < 2500; i++) {
     const name = lorem.generateWords(1);
     const title = capitalizeFirstLetter(name);
     const slug = name + '-' + i.toString();
