@@ -10,7 +10,6 @@ module.exports = ({ env }) => ({
       options: {
         useNullAsDefault: true,
         debug: false,
-        timeout: 60000,
       },
     },
   },

@@ -1,4 +1,3 @@
-const generator = require('../utils/dummy-data-generator');
 
 module.exports = ({ env }) => ({
   upload: {
@@ -10,14 +9,13 @@ module.exports = ({ env }) => ({
     },
     actionOptions: {
       upload: {
-        folder: 'jamified-webshop_' + generator.getTimestamp(),
+        folder: 'jamified-webshop',
         use_filename: true,
         unique_filename: false,
         overwrite: true,
         async: false,
         tags: ['jamified-webshop'],
         invalidate: true,
-        timeout: 60000,
       },
       delete: {},
     },
